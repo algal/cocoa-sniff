@@ -37,7 +37,7 @@ void PrintLnString(NSString * s)
 }
 
 
-+(NSString*)nameOfEncoding:(NSStringEncoding) encoding
++(NSString*)IANAnameOfEncoding:(NSStringEncoding) encoding
 {
   CFStringEncoding guessedEncodingCF = CFStringConvertNSStringEncodingToEncoding(encoding);
   /* guessedEncodingNameCF is not owned by me, since it was returned by a CoreFoundation
@@ -82,7 +82,7 @@ void PrintLnString(NSString * s)
         continue;
       } 
       else {
-        PrintLnString([NSString stringWithFormat:@"\tsucceeded. Sniffed IANACharSet:%@",[ALGUtilities nameOfEncoding:encoding]]);
+        PrintLnString([NSString stringWithFormat:@"\tsucceeded. Sniffed IANACharSet:%@",[ALGUtilities IANAnameOfEncoding:encoding]]);
         break;
       }
     } 
@@ -91,9 +91,9 @@ void PrintLnString(NSString * s)
       PrintString([NSString stringWithFormat:@"\tTrying iana-encoding=%@. ",IANACharSetName]);
       encoding = [ALGUtilities encodingForIANACharSetName:IANACharSetName];
       if (encoding == UNRECOGNIZED_NSSTRING_ENCODING) {
-        PrintLnString(@"\tfailed to recognize IANA-encoding");
+        PrintLnString(@"\tfailed to recognize IANA encoding name");
         continue;
-      } 
+      }
       
       readData = [NSString stringWithContentsOfFile:filepath encoding:encoding error:&error];
       if ( ! readData ) {

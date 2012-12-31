@@ -17,7 +17,7 @@ void PrintLnString(NSString * s);
 
 // encoding
 +(NSStringEncoding)encodingForIANACharSetName:(NSString*)theIANAName;
-+(NSString*)nameOfEncoding:(NSStringEncoding) encoding;
++(NSString*)IANAnameOfEncoding:(NSStringEncoding) encoding;
 +(NSString*)stringWithContentsOfFile:(NSString*)filepath
               tryingIANACharSetNames:(NSArray*)theIANACharSetNames;
 +(BOOL) fileIsUTF8Encoded:(NSString*)theFilepath;
