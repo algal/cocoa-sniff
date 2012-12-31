@@ -12,6 +12,15 @@
 
 #define NUMBER_OF_COLUMNS 22 // (a hint for perf)
 
+void PrintString(NSString * s)
+{
+  printf("%s",[s UTF8String]);
+}
+void PrintLnString(NSString * s)
+{
+  printf("%s\n",[s UTF8String]);
+}
+
 @implementation ALGUtilities
 
 
@@ -125,6 +134,7 @@
 +(NSString*)stringWithContentsOfFile:(NSString*)filepath
               tryingIANACharSetNames:(NSArray*)theIANACharSetNames
 {
+  BOOL const verbose = NO;
   NSStringEncoding encoding;
   NSError * error = nil;
   NSString * readData = nil;
@@ -134,38 +144,33 @@
     
     if ([IANACharSetName isEqualToString:@""] ) {
       // sniff the encoding
-      PSLogInfo(@"Trying to sniff encoding.");
+      PrintString(@"\tTrying to sniff encoding. ");
       readData = [NSString stringWithContentsOfFile:filepath usedEncoding:&encoding error:&error];
       if ( ! readData ) {
-        PSLogInfo(@"Sniffing failed, with error:%@",[error localizedDescription]);
+        PrintLnString([NSString stringWithFormat:@"\tfailed. Got error:%@",[error localizedDescription]]);
         continue;
       } 
       else {
-        PSLogInfo(@"Sniffing succeeded, discovered IANACharSet:%@",[ALGUtilities nameOfEncoding:encoding]);
+        PrintLnString([NSString stringWithFormat:@"\tsucceeded. Sniffed IANACharSet:%@",[ALGUtilities nameOfEncoding:encoding]]);
         break;
       }
     } 
     // try a given encoding
     else {
-      PSLogInfo(@"Trying to read file using IANACharSet=%@",IANACharSetName);
+      PrintString([NSString stringWithFormat:@"\tTrying iana-encoding=%@. ",IANACharSetName]);
       encoding = [ALGUtilities encodingForIANACharSetName:IANACharSetName];
       if (encoding == UNRECOGNIZED_NSSTRING_ENCODING) {
-        PSLogWarning(@"Unable to interpret as a IANA CharSet name:%@",IANACharSetName); 
+        PrintLnString(@"\tfailed to recognize IANA-encoding");
         continue;
       } 
-      else
-      {
-        PSLogInfo(@"translating IANACharSet=%@ into NSStringEncoding=%@",
-                  IANACharSetName,[ALGUtilities nameOfEncoding:encoding]);
-      }
       
       readData = [NSString stringWithContentsOfFile:filepath encoding:encoding error:&error];
       if ( ! readData ) {
-        PSLogInfo(@"Failed to read file using IANACharSet=%@. Got error=%@",IANACharSetName,[error localizedDescription]);
+        PrintLnString([NSString stringWithFormat:@"\tfailed. Got error=%@",[error localizedDescription]]);
         continue;
       }
       else {
-        PSLogInfo(@"Succeeded in reading file with IANACharSet=%@",IANACharSetName);
+        PrintLnString([NSString stringWithFormat:@"\tsucceeded."]);
         break;
       }
       

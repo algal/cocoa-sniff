@@ -8,7 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
+void PrintString(NSString * s);
+void PrintLnString(NSString * s);
+
 @interface ALGUtilities : NSObject
+
+
 
 // encoding
 +(NSDictionary*)dictionaryWithNSStringEncodingNamesAndValues;

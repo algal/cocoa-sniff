@@ -10,20 +10,6 @@
 #import "PSLog.h"
 #import "ALGUtilities.h"
 
-void PrintSupportedEncodings(void);
-void PrintString(NSString * s);
-void PrintLnString(NSString * s);
-
-
-void PrintString(NSString * s)
-{
-  printf("%s",[s UTF8String]);
-}
-void PrintLnString(NSString * s)
-{
-  printf("%s\n",[s UTF8String]);
-}
-
 
 void PrintSupportedEncodings()
 {
@@ -39,7 +25,6 @@ void PrintSupportedEncodings()
   }];
   
 }
-
 
 int main (int argc, const char * argv[])
 {
@@ -61,13 +46,14 @@ int main (int argc, const char * argv[])
        Not clear if it is ever the case that windows-1252 fails where macintosh succeeds.
        Unfortunately, successfully reading a file with a specified encoding does not
        mean that was the correct encoding.
-       
        */
+      PrintLnString([NSString stringWithFormat:@"%@:",arg]);
       NSString * fileData = [ALGUtilities stringWithContentsOfFile:arg
                                             tryingIANACharSetNames:
-                             @[@"utf-8",@"windows-1252",@"macintosh",@""]];
+                             @[@"utf-8",@"windows-1252",@"macintosh",@""]
+                             ];
       
-//      NSLog(@"file's contents=%@",fileData);
+      PrintString([NSString stringWithFormat:@"file's contents=\n%@",fileData]);
     }
   }
   return 0;
