@@ -65,7 +65,7 @@ int main (int argc, const char * argv[])
        */
       NSString * fileData = [ALGUtilities stringWithContentsOfFile:arg
                                             tryingIANACharSetNames:
-                             [NSArray arrayWithObjects:@"utf-8",@"windows-1252",@"macintosh",@"",nil]];
+                             @[@"utf-8",@"windows-1252",@"macintosh",@""]];
       
 //      NSLog(@"file's contents=%@",fileData);
     }
