@@ -16,17 +16,22 @@
 
 void PrintSupportedEncodings()
 {
-  PrintLnString([NSString stringWithFormat:@"%16s %48s %@",
-                 @"IANA_CharSetName".UTF8String,@"NSSttringEncoding".UTF8String,@"value"]);
-  NSDictionary * namesAndValues = [ALGUtilities dictionaryWithNSStringEncodingNamesAndValues];
-  [namesAndValues enumerateKeysAndObjectsUsingBlock:^(NSString * encodingName, NSNumber * encodingValue, BOOL *stop) {
-    NSStringEncoding encoding = [encodingValue unsignedIntegerValue];
+  
+  NSStringEncoding const * availableStringEncodings = [NSString availableStringEncodings];
+  NSUInteger availableStringEncodingsCount = 0;
+  while (availableStringEncodings[availableStringEncodingsCount] != 0) {
+    availableStringEncodingsCount++;
+  }
+
+  for (NSUInteger index=0; index < availableStringEncodingsCount; ++index) {
+    NSStringEncoding encoding = availableStringEncodings[index];
+    NSNumber * encodingValue = @(encoding);
+    NSString * encodingName = [NSString localizedNameOfStringEncoding:encoding];
     NSString * IANAname = [ALGUtilities nameOfEncoding:encoding];
-    
+
     PrintLnString([NSString stringWithFormat:@"%16s %48s %@",
                    IANAname.UTF8String,encodingName.UTF8String,encodingValue]);
-  }];
-  
+  }
 }
 
 NSArray * RemoveSNIFFFromEncodingNames(NSArray * encodings)

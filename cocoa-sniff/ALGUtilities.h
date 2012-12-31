@@ -16,7 +16,6 @@ void PrintLnString(NSString * s);
 
 
 // encoding
-+(NSDictionary*)dictionaryWithNSStringEncodingNamesAndValues;
 +(NSStringEncoding)encodingForIANACharSetName:(NSString*)theIANAName;
 +(NSString*)nameOfEncoding:(NSStringEncoding) encoding;
 +(NSString*)stringWithContentsOfFile:(NSString*)filepath
