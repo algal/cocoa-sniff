@@ -134,7 +134,6 @@ void PrintLnString(NSString * s)
 +(NSString*)stringWithContentsOfFile:(NSString*)filepath
               tryingIANACharSetNames:(NSArray*)theIANACharSetNames
 {
-  BOOL const verbose = NO;
   NSStringEncoding encoding;
   NSError * error = nil;
   NSString * readData = nil;
