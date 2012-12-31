@@ -124,7 +124,7 @@ void PrintLnString(NSString * s)
     return YES;
     
   PSLogError(@"failure reading filepath %@ while using encoding %@",theFilepath,
-               [ALGUtilities nameOfEncoding:encoding] );
+               [ALGUtilities IANAnameOfEncoding:encoding] );
   PSLogWarning(@"The error object says:\n description=%@\n failureReason=%@\n recoveryoptions=%@\n recoverysuggestion=%@",
                [error localizedDescription],
                [error localizedFailureReason],
