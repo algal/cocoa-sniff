@@ -11,15 +11,15 @@
 #import "ALGUtilities.h"
 
 void PrintSupportedEncodings(void);
-void PrintNSString(NSString * s);
-void PrintLnNSString(NSString * s);
+void PrintString(NSString * s);
+void PrintLnString(NSString * s);
 
 
-void PrintNSString(NSString * s)
+void PrintString(NSString * s)
 {
   printf("%s",[s UTF8String]);
 }
-void PrintLnNSString(NSString * s)
+void PrintLnString(NSString * s)
 {
   printf("%s\n",[s UTF8String]);
 }
@@ -27,13 +27,15 @@ void PrintLnNSString(NSString * s)
 
 void PrintSupportedEncodings()
 {
-  PrintLnNSString(@"IANA_CharSetName\t\tNSSttringEncoding\\ttvalue");
+  PrintLnString([NSString stringWithFormat:@"%16s %48s %@",
+                 @"IANA_CharSetName".UTF8String,@"NSSttringEncoding".UTF8String,@"value"]);
   NSDictionary * namesAndValues = [ALGUtilities dictionaryWithNSStringEncodingNamesAndValues];
-  [namesAndValues enumerateKeysAndObjectsUsingBlock:^(id encodingName, id encodingValue, BOOL *stop) {
+  [namesAndValues enumerateKeysAndObjectsUsingBlock:^(NSString * encodingName, NSNumber * encodingValue, BOOL *stop) {
     NSStringEncoding encoding = [encodingValue unsignedIntegerValue];
     NSString * IANAname = [ALGUtilities nameOfEncoding:encoding];
     
-    PrintLnNSString([NSString stringWithFormat:@"%@\t\t%@\t\t%@",IANAname,encodingName,encodingValue]);
+    PrintLnString([NSString stringWithFormat:@"%16s %48s %@",
+                   IANAname.UTF8String,encodingName.UTF8String,encodingValue]);
   }];
   
 }
@@ -44,8 +46,8 @@ int main (int argc, const char * argv[])
   @autoreleasepool {
     
     if (argc != 2) {
-      PrintLnNSString(@"usage: cocoa-sniff [filename]");
-      PrintLnNSString(@"usage: cocoa-sniff --list");
+      PrintLnString(@"usage: cocoa-sniff [filename]");
+      PrintLnString(@"usage: cocoa-sniff --list");
       exit(1);
     }
     
