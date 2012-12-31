@@ -11,7 +11,7 @@
 #import "ALGUtilities.h"
 #import "NSArray+functional.h"
 
-#define DEFAULT_ENCODINGS_TO_TRY (@[@"utf-8",@"windows-1252",@"macintosh",@""])
+#define DEFAULT_ENCODINGS_TO_TRY (@[@"utf-8",@"windows-1252",@"macintosh",@"SNIFF"])
 
 
 void PrintSupportedEncodings()
@@ -29,6 +29,12 @@ void PrintSupportedEncodings()
   
 }
 
+NSArray * RemoveSNIFFFromEncodingNames(NSArray * encodings)
+{
+  return [encodings mapUsingBlock:^NSString*(NSString* obj) {
+    return ([obj isEqualToString:@"SNIFF"] ? @"" : obj);
+  }];
+}
 
 int ch=0;
 int listSet=0;
@@ -47,12 +53,13 @@ void PrintUsage(NSString * appName) {
                 [NSString stringWithFormat:
                 @"\n"
                 @"\tEncodings must be IANA charset names, except for the special\n"
-                @"\tname \"SNIFF\", which causes the the system to rely on Cocoa's\n"
+                @"\tencoding name SNIFF, which causes the system to rely on Cocoa's\n"
                 @"\tencoding guesser.\n"
                 @"\n"
                 @"\tThis app assumes its operating in a UTF-8 terminal.\n"
                 @"\tIf no list of encoding is specified, the default is %@",
-                 DEFAULT_ENCODINGS_TO_TRY]
+                 DEFAULT_ENCODINGS_TO_TRY
+                 ]
                 );
 }
 
@@ -71,26 +78,18 @@ int main (int argc, const char * argv[])
           encodingsToTry = [[NSString stringWithCString:optarg
                                                encoding:NSUTF8StringEncoding]
                             componentsSeparatedByString:@","];
-          
-          encodingsToTry = [encodingsToTry mapUsingBlock:^NSString*(NSString* obj) {
-            if ([obj isEqualToString:@"SNIFF"])
-              return @"";
-            else
-              return obj;
-          }];
           break;
       }
     argc -= optind;
     argv += optind;
     
-//    PrintLnString([NSString stringWithFormat:@"list flag=%@",(listSet ? @"YES" : @"NO")]);
-//    PrintLnString([NSString stringWithFormat:@"encodings=%@",encodingsToTry]);
-    
+    // print list if that's required
     if (listSet == 1) {
       PrintSupportedEncodings();
       exit(0);
     }
     
+    // abort if no file given
     if (argc==0) {
       PrintUsage(appName);
       exit(2);
@@ -108,8 +107,7 @@ int main (int argc, const char * argv[])
     PrintLnString([NSString stringWithFormat:@"%@:",arg]);
     NSString * fileData = [ALGUtilities stringWithContentsOfFile:arg
                                           tryingIANACharSetNames:
-                           //                             @[@"utf-8",@"windows-1252",@"macintosh",@""]
-                           encodingsToTry
+                           RemoveSNIFFFromEncodingNames(encodingsToTry)
                            ];
     
     
