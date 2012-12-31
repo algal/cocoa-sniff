@@ -6,9 +6,11 @@
 //  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
 //
 
+#import <getopt.h>
 #import <Foundation/Foundation.h>
 #import "PSLog.h"
 #import "ALGUtilities.h"
+#import "NSArray+functional.h"
 
 
 void PrintSupportedEncodings()
@@ -26,21 +28,65 @@ void PrintSupportedEncodings()
   
 }
 
+
+int ch=0;
+int listSet=0;
+
+/* options descriptor */
+static struct option longopts[] = {
+  { "list",       no_argument,       &listSet,       1 },
+  { "encodings",  required_argument, NULL, 'e' },
+  { NULL,         0,                 NULL,           0 }
+};
+
+void PrintUsage(NSString * appName) {
+  PrintLnString([NSString stringWithFormat:@"usage: %@ [--list]",appName]);
+  PrintLnString([NSString stringWithFormat:@"usage: %@ [--encodings=encoding1,encoding2,encoding3] filename",appName]);
+  PrintLnString(@"\n\tEncodings must be IANA charset names, except for the special name \"SNIFF\", which causes the the system to rely on Cocoa eoncding guesser");
+}
+
 int main (int argc, const char * argv[])
 {
   @autoreleasepool {
-    
-    if (argc != 2) {
-      PrintLnString(@"usage: cocoa-sniff [filename]");
-      PrintLnString(@"usage: cocoa-sniff --list");
-      exit(1);
-    }
-    
-    NSString * arg = [NSString stringWithCString:argv[1] encoding:NSASCIIStringEncoding];
-    if ([arg isEqualToString:@"--list"]) {
+    NSString * const appName = [[NSString stringWithCString:argv[0] encoding:NSUTF8StringEncoding]
+                                lastPathComponent];
+  
+    NSArray * encodingsToTry = @[@"utf-8",@"windows-1252",@"macintosh",@""];
+
+    while ((ch = getopt_long(argc, argv, "e:", longopts, NULL)) != -1)
+      switch (ch) {
+        case 'e':
+          encodingsToTry = [[NSString stringWithCString:optarg
+                                               encoding:NSUTF8StringEncoding]
+                            componentsSeparatedByString:@","];
+          
+          encodingsToTry = [encodingsToTry mapUsingBlock:^NSString*(NSString* obj) {
+            if ([obj isEqualToString:@"SNIFF"])
+              return @"";
+            else
+              return obj;
+          }];
+          break;
+      }
+    argc -= optind;
+    argv += optind;
+
+    PrintLnString([NSString stringWithFormat:@"list flag=%@",(listSet ? @"YES" : @"NO")]);
+    PrintLnString([NSString stringWithFormat:@"encodings=%@",encodingsToTry]);
+
+    if (listSet == 1) {
       PrintSupportedEncodings();
+      exit(0);
     }
-    else {
+
+    if (argc==0) {
+      PrintUsage(appName);
+      exit(2);
+    }
+
+    NSString * arg = [NSString stringWithCString:argv[0] encoding:NSUTF8StringEncoding];
+
+    {
       // try utf-8, then windows-1252, then macintosh.
       /**
        Not clear if it is ever the case that windows-1252 fails where macintosh succeeds.
@@ -50,10 +96,11 @@ int main (int argc, const char * argv[])
       PrintLnString([NSString stringWithFormat:@"%@:",arg]);
       NSString * fileData = [ALGUtilities stringWithContentsOfFile:arg
                                             tryingIANACharSetNames:
-                             @[@"utf-8",@"windows-1252",@"macintosh",@""]
+//                             @[@"utf-8",@"windows-1252",@"macintosh",@""]
+                             encodingsToTry
                              ];
       
-      PrintString([NSString stringWithFormat:@"file's contents=\n%@",fileData]);
+      PrintString([NSString stringWithFormat:@"file's contents with this encoding=\n%@",fileData]);
     }
   }
   return 0;
