@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-void PrintString(NSString * s);
-void PrintLnString(NSString * s);
+void ALGPrintString(NSString * s);
+void ALGPrintLnString(NSString * s);
 
 @interface ALGEncodingUtils : NSObject
 

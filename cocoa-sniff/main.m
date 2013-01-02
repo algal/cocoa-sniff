@@ -24,7 +24,7 @@ void PrintSupportedEncodings()
     NSString * encodingName = [NSString localizedNameOfStringEncoding:encoding];
     NSString * IANAname = [ALGEncodingUtils IANACharSetNameOfEncoding:encoding];
 
-    PrintLnString([NSString stringWithFormat:@"%48s %16s %@",
+    ALGPrintLnString([NSString stringWithFormat:@"%48s %16s %@",
                    encodingName.UTF8String,IANAname.UTF8String,encodingValue]);
   }
 }
@@ -49,9 +49,9 @@ static struct option longopts[] = {
 };
 
 void PrintUsage(NSString * appName) {
-  PrintLnString([NSString stringWithFormat:@"usage: %@ [--list]",appName]);
-  PrintLnString([NSString stringWithFormat:@"usage: %@ [--convert] [--encodings=encoding1,encoding2,encoding3] filename",appName]);
-  PrintLnString(
+  ALGPrintLnString([NSString stringWithFormat:@"usage: %@ [--list]",appName]);
+  ALGPrintLnString([NSString stringWithFormat:@"usage: %@ [--convert] [--encodings=encoding1,encoding2,encoding3] filename",appName]);
+  ALGPrintLnString(
                 [NSString stringWithFormat:
                 @"\n"
                 @"\tEncodings must be IANA charset names, except for the special\n"
@@ -102,7 +102,7 @@ int main (int argc, const char * argv[])
     NSString * arg = [NSString stringWithCString:argv[0] encoding:NSUTF8StringEncoding];
     
     if(verbose)
-        PrintLnString([NSString stringWithFormat:@"%@:",arg]);
+        ALGPrintLnString([NSString stringWithFormat:@"%@:",arg]);
 
     NSString * fileData = [ALGEncodingUtils stringWithContentsOfFile:arg
                                           tryingIANACharSetNames:RemoveSNIFFFromEncodingNames(encodingsToTry)
@@ -110,7 +110,7 @@ int main (int argc, const char * argv[])
     if (fileData != nil) {
       retcode = 1;
       if (convertSet == 1) {
-        PrintString(fileData);
+        ALGPrintString(fileData);
       }
     } else {
       retcode = 0;
