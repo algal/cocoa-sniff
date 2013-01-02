@@ -8,7 +8,7 @@
 
 #import <getopt.h>
 #import <Foundation/Foundation.h>
-#import "ALGUtilities.h"
+#import "ALGEncodingUtils.h"
 #import "NSArray+functional.h"
 
 #define DEFAULT_ENCODINGS_TO_TRY (@[@"SNIFF",@"windows-1252",@"macintosh"])
@@ -22,7 +22,7 @@ void PrintSupportedEncodings()
     NSStringEncoding encoding = *encodingptr;
     NSNumber * encodingValue = @(encoding);
     NSString * encodingName = [NSString localizedNameOfStringEncoding:encoding];
-    NSString * IANAname = [ALGUtilities IANACharSetNameOfEncoding:encoding];
+    NSString * IANAname = [ALGEncodingUtils IANACharSetNameOfEncoding:encoding];
 
     PrintLnString([NSString stringWithFormat:@"%48s %16s %@",
                    encodingName.UTF8String,IANAname.UTF8String,encodingValue]);
@@ -104,7 +104,7 @@ int main (int argc, const char * argv[])
     if(verbose)
         PrintLnString([NSString stringWithFormat:@"%@:",arg]);
 
-    NSString * fileData = [ALGUtilities stringWithContentsOfFile:arg
+    NSString * fileData = [ALGEncodingUtils stringWithContentsOfFile:arg
                                           tryingIANACharSetNames:RemoveSNIFFFromEncodingNames(encodingsToTry)
                                          printAttemptedDecodings:verbose];
     if (fileData != nil) {

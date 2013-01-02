@@ -10,7 +10,7 @@
 		5E651C6E1691BC4700C29672 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E651C6D1691BC4700C29672 /* Foundation.framework */; };
 		5E651C711691BC4700C29672 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E651C701691BC4700C29672 /* main.m */; };
 		5E651C751691BC4700C29672 /* cocoa_sniff.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5E651C741691BC4700C29672 /* cocoa_sniff.1 */; };
-		5E651C7E1691BC8700C29672 /* ALGUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E651C7D1691BC8700C29672 /* ALGUtilities.m */; };
+		5E651C7E1691BC8700C29672 /* ALGEncodingUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E651C7D1691BC8700C29672 /* ALGEncodingUtils.m */; };
 		5E651C811691BCA200C29672 /* NSArray+functional.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E651C801691BCA200C29672 /* NSArray+functional.m */; };
 /* End PBXBuildFile section */
 
@@ -34,8 +34,8 @@
 		5E651C731691BC4700C29672 /* cocoa-sniff-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "cocoa-sniff-Prefix.pch"; sourceTree = "<group>"; };
 		5E651C741691BC4700C29672 /* cocoa_sniff.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = cocoa_sniff.1; sourceTree = "<group>"; };
 		5E651C7B1691BC7800C29672 /* PSLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PSLog.h; sourceTree = "<group>"; };
-		5E651C7C1691BC8700C29672 /* ALGUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALGUtilities.h; sourceTree = "<group>"; };
-		5E651C7D1691BC8700C29672 /* ALGUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALGUtilities.m; sourceTree = "<group>"; };
+		5E651C7C1691BC8700C29672 /* ALGEncodingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALGEncodingUtils.h; sourceTree = "<group>"; };
+		5E651C7D1691BC8700C29672 /* ALGEncodingUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALGEncodingUtils.m; sourceTree = "<group>"; };
 		5E651C7F1691BCA200C29672 /* NSArray+functional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+functional.h"; sourceTree = "<group>"; };
 		5E651C801691BCA200C29672 /* NSArray+functional.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+functional.m"; sourceTree = "<group>"; };
 		5E651C8D1691F4F900C29672 /* README.rst */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.rst; sourceTree = "<group>"; };
@@ -88,8 +88,8 @@
 			children = (
 				5E651C7F1691BCA200C29672 /* NSArray+functional.h */,
 				5E651C801691BCA200C29672 /* NSArray+functional.m */,
-				5E651C7C1691BC8700C29672 /* ALGUtilities.h */,
-				5E651C7D1691BC8700C29672 /* ALGUtilities.m */,
+				5E651C7C1691BC8700C29672 /* ALGEncodingUtils.h */,
+				5E651C7D1691BC8700C29672 /* ALGEncodingUtils.m */,
 				5E651C7B1691BC7800C29672 /* PSLog.h */,
 				5E651C701691BC4700C29672 /* main.m */,
 				5E651C741691BC4700C29672 /* cocoa_sniff.1 */,
@@ -168,7 +168,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5E651C711691BC4700C29672 /* main.m in Sources */,
-				5E651C7E1691BC8700C29672 /* ALGUtilities.m in Sources */,
+				5E651C7E1691BC8700C29672 /* ALGEncodingUtils.m in Sources */,
 				5E651C811691BCA200C29672 /* NSArray+functional.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

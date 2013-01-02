@@ -11,7 +11,7 @@
 void PrintString(NSString * s);
 void PrintLnString(NSString * s);
 
-@interface ALGUtilities : NSObject
+@interface ALGEncodingUtils : NSObject
 
 // encoding
 +(NSStringEncoding)encodingForIANACharSetName:(NSString*)theIANAName;

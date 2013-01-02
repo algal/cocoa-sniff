@@ -6,7 +6,7 @@
 //  Copyright (c) 2011 __MyCompanyName__. All rights reserved.
 //
 
-#import "ALGUtilities.h"
+#import "ALGEncodingUtils.h"
 #import "PSLog.h"
 #import "NSArray+functional.h"
 
@@ -21,7 +21,7 @@ void PrintLnString(NSString * s)
   printf("%s\n",[s UTF8String]);
 }
 
-@implementation ALGUtilities
+@implementation ALGEncodingUtils
 
 #define UNRECOGNIZED_NSSTRING_ENCODING 0 // is unused by Apple's enum, so seems ok as a flag
 
@@ -86,7 +86,7 @@ void PrintLnString(NSString * s)
       } 
       else {
         if ( printing)
-            PrintLnString([NSString stringWithFormat:@"\tsucceeded. Sniffed IANACharSet:%@",[ALGUtilities IANACharSetNameOfEncoding:encoding]]);
+            PrintLnString([NSString stringWithFormat:@"\tsucceeded. Sniffed IANACharSet:%@",[ALGEncodingUtils IANACharSetNameOfEncoding:encoding]]);
         break;
       }
     } 
@@ -94,7 +94,7 @@ void PrintLnString(NSString * s)
     else {
       if ( printing)
           PrintString([NSString stringWithFormat:@"\tTrying iana-encoding=%@. ",IANACharSetName]);
-      encoding = [ALGUtilities encodingForIANACharSetName:IANACharSetName];
+      encoding = [ALGEncodingUtils encodingForIANACharSetName:IANACharSetName];
       if (encoding == UNRECOGNIZED_NSSTRING_ENCODING) {
         if ( printing)
             PrintLnString(@"\tfailed to recognize IANA encoding name");
