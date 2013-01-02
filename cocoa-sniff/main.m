@@ -16,21 +16,16 @@
 
 void PrintSupportedEncodings()
 {
-  
-  NSStringEncoding const * availableStringEncodings = [NSString availableStringEncodings];
-  NSUInteger availableStringEncodingsCount = 0;
-  while (availableStringEncodings[availableStringEncodingsCount] != 0) {
-    availableStringEncodingsCount++;
-  }
-
-  for (NSUInteger index=0; index < availableStringEncodingsCount; ++index) {
-    NSStringEncoding encoding = availableStringEncodings[index];
+  for (NSStringEncoding const * encodingptr = [NSString availableStringEncodings];
+       *encodingptr !=0; ++encodingptr)
+  {
+    NSStringEncoding encoding = *encodingptr;
     NSNumber * encodingValue = @(encoding);
     NSString * encodingName = [NSString localizedNameOfStringEncoding:encoding];
     NSString * IANAname = [ALGUtilities IANACharSetNameOfEncoding:encoding];
 
-    PrintLnString([NSString stringWithFormat:@"%16s %48s %@",
-                   IANAname.UTF8String,encodingName.UTF8String,encodingValue]);
+    PrintLnString([NSString stringWithFormat:@"%48s %16s %@",
+                   encodingName.UTF8String,IANAname.UTF8String,encodingValue]);
   }
 }
 
