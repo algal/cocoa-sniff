@@ -97,18 +97,20 @@ int main (int argc, const char * argv[])
       exit(2);
     }
     
+    BOOL verbose = (convertSet!=1);
+   
     NSString * arg = [NSString stringWithCString:argv[0] encoding:NSUTF8StringEncoding];
-    PrintLnString([NSString stringWithFormat:@"%@:",arg]);
+    
+    if(verbose)
+        PrintLnString([NSString stringWithFormat:@"%@:",arg]);
+
     NSString * fileData = [ALGUtilities stringWithContentsOfFile:arg
-                                          tryingIANACharSetNames:
-                           RemoveSNIFFFromEncodingNames(encodingsToTry)
-                           ];
-    
-    
+                                          tryingIANACharSetNames:RemoveSNIFFFromEncodingNames(encodingsToTry)
+                                         printAttemptedDecodings:verbose];
     if (fileData != nil) {
       retcode = 1;
       if (convertSet == 1) {
-        PrintString([NSString stringWithFormat:@"file's contents with this encoding=\n%@",fileData]);
+        PrintString(fileData);
       }
     } else {
       retcode = 0;

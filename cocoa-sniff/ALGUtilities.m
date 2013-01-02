@@ -65,6 +65,7 @@ void PrintLnString(NSString * s)
  If a name is an empty, tries to guess. */
 +(NSString*)stringWithContentsOfFile:(NSString*)filepath
               tryingIANACharSetNames:(NSArray*)theIANACharSetNames
+             printAttemptedDecodings:(BOOL)printing
 {
   NSStringEncoding encoding;
   NSError * error = nil;
@@ -72,36 +73,42 @@ void PrintLnString(NSString * s)
   
   for (NSString * IANACharSetName in theIANACharSetNames) {
     error = nil;
-    
     if ([IANACharSetName isEqualToString:@""] ) {
       // sniff the encoding
-      PrintString(@"\tTrying to sniff encoding. ");
+      if ( printing)
+          PrintString(@"\tTrying to sniff encoding. ");
       readData = [NSString stringWithContentsOfFile:filepath usedEncoding:&encoding error:&error];
       if ( ! readData ) {
-        PrintLnString([NSString stringWithFormat:@"\tfailed. Got error:%@",[error localizedDescription]]);
+        if ( printing)
+            PrintLnString([NSString stringWithFormat:@"\tfailed. Got error:%@",[error localizedDescription]]);
         continue;
       } 
       else {
-        PrintLnString([NSString stringWithFormat:@"\tsucceeded. Sniffed IANACharSet:%@",[ALGUtilities IANACharSetNameOfEncoding:encoding]]);
+        if ( printing)
+            PrintLnString([NSString stringWithFormat:@"\tsucceeded. Sniffed IANACharSet:%@",[ALGUtilities IANACharSetNameOfEncoding:encoding]]);
         break;
       }
     } 
     // try a given encoding
     else {
-      PrintString([NSString stringWithFormat:@"\tTrying iana-encoding=%@. ",IANACharSetName]);
+      if ( printing)
+          PrintString([NSString stringWithFormat:@"\tTrying iana-encoding=%@. ",IANACharSetName]);
       encoding = [ALGUtilities encodingForIANACharSetName:IANACharSetName];
       if (encoding == UNRECOGNIZED_NSSTRING_ENCODING) {
-        PrintLnString(@"\tfailed to recognize IANA encoding name");
+        if ( printing)
+            PrintLnString(@"\tfailed to recognize IANA encoding name");
         continue;
       }
       
       readData = [NSString stringWithContentsOfFile:filepath encoding:encoding error:&error];
       if ( ! readData ) {
-        PrintLnString([NSString stringWithFormat:@"\tfailed. Got error=%@",[error localizedDescription]]);
+        if ( printing)
+            PrintLnString([NSString stringWithFormat:@"\tfailed. Got error=%@",[error localizedDescription]]);
         continue;
       }
       else {
-        PrintLnString([NSString stringWithFormat:@"\tsucceeded."]);
+        if ( printing)
+            PrintLnString([NSString stringWithFormat:@"\tsucceeded."]);
         break;
       }
       
