@@ -23,7 +23,8 @@ void PrintLnString(NSString * s)
 
 @implementation ALGUtilities
 
-#define UNRECOGNIZED_NSSTRING_ENCODING 0 // is unused by Apple's enum, so seems ok
+#define UNRECOGNIZED_NSSTRING_ENCODING 0 // is unused by Apple's enum, so seems ok as a flag
+
 +(NSStringEncoding)encodingForIANACharSetName:(NSString*)theIANAName
 {
   CFStringRef theIANANameCF = CFBridgingRetain(theIANAName) ;
@@ -118,27 +119,6 @@ void PrintLnString(NSString * s)
   // assert: encoding contains last encoding used or sniffed
   // assert: error contains an error, or nil if successful
   return readData;
-}
-
-
-+(BOOL) fileIsUTF8Encoded:(NSString*)theFilepath
-{
-  NSError * error = nil;
-  NSStringEncoding encoding = NSUTF8StringEncoding;
-  
-  NSString *str = [NSString stringWithContentsOfFile:theFilepath encoding:encoding error:&error];
-  if ( str != nil )
-    return YES;
-    
-  PSLogError(@"failure reading filepath %@ while using encoding %@",theFilepath,
-               [ALGUtilities IANACharSetNameOfEncoding:encoding] );
-  PSLogWarning(@"The error object says:\n description=%@\n failureReason=%@\n recoveryoptions=%@\n recoverysuggestion=%@",
-               [error localizedDescription],
-               [error localizedFailureReason],
-               [error localizedRecoveryOptions],
-               [error localizedRecoverySuggestion]);
-  
-  return NO;
 }
 
 @end

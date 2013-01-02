@@ -2,7 +2,7 @@
 cocoa-sniff
 ===========
 
-cocoa-sniff helps with exploring and performing text encoding conversions with Cocoa.
+cocoa-sniff helps with trying text encoding conversions with Cocoa.
 
 It lets you quickly:
 
@@ -20,9 +20,9 @@ What's the point of that? If you know the encoding of a text file, then there is
 
 One way to guess is to ask Cocoa to guess with the method ``+[NSString stringWithContentsOfFile:usedEncoding:error:]``, but Cocoa's guesses are pretty poor. So you can use this utility to see how well Cocoa guesses for your files in particular.
 
-Another way to guess is to use a trial encoding -- that is, to try an encoding and rely on Cocoa to produce an error if it can see that you guessed wrong. This is sometimes a bad strategy because of false positives -- for instance, it seems Cocoa will read almost anything with a "macintosh" encoding, incorrectly. But sometimes it's a pretty good strategy -- if something's not UTF-8, it will probably produce an error if you try to read it as UTF-8. So before guessing in this way, you will probably want to try a few trial encodings on your files and see which encoding succeeds only when desired. This utility can help with that.
+Another way to guess is to use a trial encoding -- that is, to try an encoding and rely on Cocoa to produce an error if it can see that you guessed wrong. This is sometimes a bad strategy because of false positives -- for instance, it seems Cocoa will read almost anything with a "macintosh" encoding, incorrectly. But sometimes it's a pretty good strategy -- if something's not utf-8, it will probably produce an error if you try to read it as UTF-8. So before guessing in this way, you will probably want to try a few trial encodings on your files and see which encoding succeeds only when desired. This utility can help with that.
 
-Last, you might want to try converting a file by using a sequence of trial encodings. That is, first try UTF-8. If it fails, try windows-1252. If it fails, try macintosh. This utility can help with that.
+Last, you might want to try converting a file by using a sequence of trial encodings. That is, first try utf-8. If it fails, try windows-1252. If it fails, try macintosh. This utility can help with that.
 
 If you're receiving English-language text files, produced on Mac OS X or on Windows, from MSWord, Notepad, or TextEdit, and if the main extended ascii characters you're likely to encounter are typographer's quotes, en-dashes, em-dashes, bullet points, and perhaps the trademark or copyright sign, then a good sequence of trial encodings is probably SNIFF, windows-1252, macintosh. This is because it seems that SNIFF will reliably detect utf-8, utf-16, and fail on other encodings; windows-1252 will fail on macintosh encoding; and macintosh will accept anything.
 
@@ -42,16 +42,17 @@ Check what encoding Cocoa guesses in the method ``+[NSString stringWithContentsO
 
   cocoa-sniff --encodings=SNIFF foo.txt
   
-Try a sequence of encodings, and convert using the first one that succeeds:
+Try a sequence of encodings, and convert using the first one that succeeds. For instance, suppose you have a file foo.txt with an unknown encoding. What you would like to do is try to autodetect the encoding and, failing that, read it as windows-1252, and failing that, read it as macintosh. Then you would do:
 
 ::
 
-  cocoa-sniff --encodings=utf-8,windows-1252,macintosh,SNIFF
+  cocoa-sniff --encodings=SNIFF,windows-1252,macintosh foo.txt
 
-For instance, suppose you have a file foo.txt with an unknown encoding. What you
-would like to do is read it as utf-8, and failing that, read it as windows-1252,
-and failing that, read it as macintosh.
+Convert a file using the above encoding strategy:
 
+::
+
+  cocoa-sniff --convert --encodings=SNIFF,windows-1252,macintosh foo.txt > foo-convered.txt
 
 
 Other utilities
@@ -60,7 +61,7 @@ Other utilities
 This utility is just a front-end to part of Cocoa's text system, which you  might be obliged to use in order to deploy on Apple's App Store. However, if you're running detections and conversions at build time, and can use any utilities available on a plain vanilla Xcode install, you might prefer these:
 
 textutil
-  This built-in Mac OS X utility does conversion between text encodings, as well as various other text-oriented formats such as HTML, RTF, .webarchive, etc.. In particular, you can use it to try reading a file with a given encoding and check for errors. This would be great for finding a suitable encoding for reading an unknown file with Cocoa. However, there is one fly in the ointment. textutil seems to apply its own implicit conversion logic, so that it will accept files as, e.g., UTF-8, that Cocoa itself will not accept as UTF-8.
+  This built-in Mac OS X utility does conversion between text encodings, as well as various other text-oriented formats such as HTML, RTF, .webarchive, etc.. In particular, you can use it to try reading a file with a given encoding and check for errors. This would be great for finding a suitable encoding for reading an unknown file with Cocoa. However, there is one fly in the ointment. textutil seems to apply its own implicit conversion logic, so that it will accept files as, e.g., utf-8, that Cocoa itself will not accept as utf-8.
   
   Here are some helpful incantation. 
 
