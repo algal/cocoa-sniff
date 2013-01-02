@@ -11,7 +11,7 @@
 #import "ALGUtilities.h"
 #import "NSArray+functional.h"
 
-#define DEFAULT_ENCODINGS_TO_TRY (@[@"utf-8",@"windows-1252",@"macintosh",@"SNIFF"])
+#define DEFAULT_ENCODINGS_TO_TRY (@[@"SNIFF",@"windows-1252",@"macintosh"])
 
 
 void PrintSupportedEncodings()
@@ -38,17 +38,19 @@ NSArray * RemoveSNIFFFromEncodingNames(NSArray * encodings)
 
 int ch=0;
 int listSet=0;
+int convertSet=0;
 
 /* options descriptor */
 static struct option longopts[] = {
   { "list",       no_argument,       &listSet,       1 },
   { "encodings",  required_argument, NULL, 'e' },
+  { "convert",    no_argument,       &convertSet,    1 },
   { NULL,         0,                 NULL,           0 }
 };
 
 void PrintUsage(NSString * appName) {
   PrintLnString([NSString stringWithFormat:@"usage: %@ [--list]",appName]);
-  PrintLnString([NSString stringWithFormat:@"usage: %@ [--encodings=encoding1,encoding2,encoding3] filename",appName]);
+  PrintLnString([NSString stringWithFormat:@"usage: %@ [--convert] [--encodings=encoding1,encoding2,encoding3] filename",appName]);
   PrintLnString(
                 [NSString stringWithFormat:
                 @"\n"
@@ -83,27 +85,19 @@ int main (int argc, const char * argv[])
     argc -= optind;
     argv += optind;
     
-    // print list if that's required
+    // if requested, print encodings and exit
     if (listSet == 1) {
       PrintSupportedEncodings();
       exit(0);
     }
     
-    // abort if no file given
+    // if no file given, exit
     if (argc==0) {
       PrintUsage(appName);
       exit(2);
     }
     
     NSString * arg = [NSString stringWithCString:argv[0] encoding:NSUTF8StringEncoding];
-    
-    
-    // try utf-8, then windows-1252, then macintosh.
-    /**
-     Not clear if it is ever the case that windows-1252 fails where macintosh succeeds.
-     Unfortunately, successfully reading a file with a specified encoding does not
-     mean that was the correct encoding.
-     */
     PrintLnString([NSString stringWithFormat:@"%@:",arg]);
     NSString * fileData = [ALGUtilities stringWithContentsOfFile:arg
                                           tryingIANACharSetNames:
@@ -113,7 +107,9 @@ int main (int argc, const char * argv[])
     
     if (fileData != nil) {
       retcode = 1;
-      PrintString([NSString stringWithFormat:@"file's contents with this encoding=\n%@",fileData]);
+      if (convertSet == 1) {
+        PrintString([NSString stringWithFormat:@"file's contents with this encoding=\n%@",fileData]);
+      }
     } else {
       retcode = 0;
     }
