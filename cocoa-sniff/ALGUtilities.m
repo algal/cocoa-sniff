@@ -37,7 +37,7 @@ void PrintLnString(NSString * s)
 }
 
 
-+(NSString*)IANAnameOfEncoding:(NSStringEncoding) encoding
++(NSString*)IANACharSetNameOfEncoding:(NSStringEncoding) encoding
 {
   CFStringEncoding guessedEncodingCF = CFStringConvertNSStringEncodingToEncoding(encoding);
   /* guessedEncodingNameCF is not owned by me, since it was returned by a CoreFoundation
@@ -82,7 +82,7 @@ void PrintLnString(NSString * s)
         continue;
       } 
       else {
-        PrintLnString([NSString stringWithFormat:@"\tsucceeded. Sniffed IANACharSet:%@",[ALGUtilities IANAnameOfEncoding:encoding]]);
+        PrintLnString([NSString stringWithFormat:@"\tsucceeded. Sniffed IANACharSet:%@",[ALGUtilities IANACharSetNameOfEncoding:encoding]]);
         break;
       }
     } 
@@ -124,7 +124,7 @@ void PrintLnString(NSString * s)
     return YES;
     
   PSLogError(@"failure reading filepath %@ while using encoding %@",theFilepath,
-               [ALGUtilities IANAnameOfEncoding:encoding] );
+               [ALGUtilities IANACharSetNameOfEncoding:encoding] );
   PSLogWarning(@"The error object says:\n description=%@\n failureReason=%@\n recoveryoptions=%@\n recoverysuggestion=%@",
                [error localizedDescription],
                [error localizedFailureReason],

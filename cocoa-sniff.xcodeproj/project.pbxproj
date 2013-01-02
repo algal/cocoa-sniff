@@ -38,6 +38,10 @@
 		5E651C7D1691BC8700C29672 /* ALGUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALGUtilities.m; sourceTree = "<group>"; };
 		5E651C7F1691BCA200C29672 /* NSArray+functional.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+functional.h"; sourceTree = "<group>"; };
 		5E651C801691BCA200C29672 /* NSArray+functional.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+functional.m"; sourceTree = "<group>"; };
+		5E651C8D1691F4F900C29672 /* README.rst */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.rst; sourceTree = "<group>"; };
+		5E651C9D16943F2400C29672 /* textutil-readable.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = "textutil-readable.py"; sourceTree = "<group>"; };
+		5E651C9E16943F2400C29672 /* textutil-readable.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = "textutil-readable.sh"; sourceTree = "<group>"; };
+		5E651C9F16943F2F00C29672 /* chardetect.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = chardetect.py; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +59,7 @@
 		5E651C5E1691BC4700C29672 = {
 			isa = PBXGroup;
 			children = (
+				5E651C9C16943F0500C29672 /* utilities */,
 				5E651C6F1691BC4700C29672 /* cocoa-sniff */,
 				5E651C6C1691BC4700C29672 /* Frameworks */,
 				5E651C6A1691BC4700C29672 /* Products */,
@@ -80,6 +85,7 @@
 		5E651C6F1691BC4700C29672 /* cocoa-sniff */ = {
 			isa = PBXGroup;
 			children = (
+				5E651C8D1691F4F900C29672 /* README.rst */,
 				5E651C7F1691BCA200C29672 /* NSArray+functional.h */,
 				5E651C801691BCA200C29672 /* NSArray+functional.m */,
 				5E651C7C1691BC8700C29672 /* ALGUtilities.h */,
@@ -98,6 +104,16 @@
 				5E651C731691BC4700C29672 /* cocoa-sniff-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5E651C9C16943F0500C29672 /* utilities */ = {
+			isa = PBXGroup;
+			children = (
+				5E651C9F16943F2F00C29672 /* chardetect.py */,
+				5E651C9D16943F2400C29672 /* textutil-readable.py */,
+				5E651C9E16943F2400C29672 /* textutil-readable.sh */,
+			);
+			name = utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,6 +266,7 @@
 				5E651C7A1691BC4700C29672 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

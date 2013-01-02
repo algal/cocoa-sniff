@@ -27,7 +27,7 @@ void PrintSupportedEncodings()
     NSStringEncoding encoding = availableStringEncodings[index];
     NSNumber * encodingValue = @(encoding);
     NSString * encodingName = [NSString localizedNameOfStringEncoding:encoding];
-    NSString * IANAname = [ALGUtilities IANAnameOfEncoding:encoding];
+    NSString * IANAname = [ALGUtilities IANACharSetNameOfEncoding:encoding];
 
     PrintLnString([NSString stringWithFormat:@"%16s %48s %@",
                    IANAname.UTF8String,encodingName.UTF8String,encodingValue]);
