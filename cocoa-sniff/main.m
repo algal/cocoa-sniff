@@ -108,12 +108,12 @@ int main (int argc, const char * argv[])
                                           tryingIANACharSetNames:RemoveSNIFFFromEncodingNames(encodingsToTry)
                                          printAttemptedDecodings:verbose];
     if (fileData != nil) {
-      retcode = 1;
+      retcode = 0;
       if (convertSet == 1) {
         ALGPrintString(fileData);
       }
     } else {
-      retcode = 0;
+      retcode = 1;
     }
   }
   return retcode;
