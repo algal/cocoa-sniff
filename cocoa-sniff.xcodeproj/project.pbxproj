@@ -28,6 +28,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5E5524EA16A96678000E9DD6 /* encoding-test-cases.zip */ = {isa = PBXFileReference; lastKnownFileType = archive.zip; path = "encoding-test-cases.zip"; sourceTree = "<group>"; };
 		5E651C691691BC4700C29672 /* cocoa-sniff */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "cocoa-sniff"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E651C6D1691BC4700C29672 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5E651C701691BC4700C29672 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -60,6 +61,7 @@
 			isa = PBXGroup;
 			children = (
 				5E651C8D1691F4F900C29672 /* README.rst */,
+				5E5524EA16A96678000E9DD6 /* encoding-test-cases.zip */,
 				5E651C9C16943F0500C29672 /* utilities */,
 				5E651C6F1691BC4700C29672 /* cocoa-sniff */,
 				5E651C6C1691BC4700C29672 /* Frameworks */,
