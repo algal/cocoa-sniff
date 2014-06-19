@@ -68,6 +68,8 @@
 				5E651C6A1691BC4700C29672 /* Products */,
 			);
 			sourceTree = "<group>";
+			tabWidth = 2;
+			usesTabs = 0;
 		};
 		5E651C6A1691BC4700C29672 /* Products */ = {
 			isa = PBXGroup;
